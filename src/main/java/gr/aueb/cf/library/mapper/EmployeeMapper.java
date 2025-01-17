@@ -16,14 +16,12 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class EmployeeMapper {
 
-    private final PasswordEncoder passwordEncoder;
+//    private final PasswordEncoder passwordEncoder;
 
     public EmployeeReadOnlyDTO mapToEmployeeReadOnlyDTO(Employee employee) {
         EmployeeReadOnlyDTO employeeReadOnlyDTO = new EmployeeReadOnlyDTO();
         employeeReadOnlyDTO.setId(employee.getId());
         employeeReadOnlyDTO.setFirstname(employee.getFirstname());
-//        employeeReadOnlyDTO.setEmail(employee.getEmail());
-//        employeeReadOnlyDTO.setRole(employee.getRole());
         employeeReadOnlyDTO.setIsActive(employee.getIsActive());
 
         UserReadOnlyDTO userDTO = new UserReadOnlyDTO();
@@ -44,7 +42,7 @@ public class EmployeeMapper {
         UserInsertDTO userInsertDTO = employeeInsertDTO.getUser();
         User user = new User();
         user.setLastname(userInsertDTO.getLastname());
-        user.setPassword(passwordEncoder.encode(userInsertDTO.getPassword()));
+        user.setPassword(userInsertDTO.getPassword());
         user.setUsername(userInsertDTO.getUsername());
         employee.setUser(user);
 

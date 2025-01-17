@@ -56,7 +56,7 @@ public class UserRestController {
 
 
         UserReadOnlyDTO userReadOnlyDTO = userService.saveUser(userInsertDTO);
-//        userInsertDTO.setPassword(bCryptPasswordEncoder.encode(userInsertDTO.getPassword()));
+
         return new ResponseEntity<>(userReadOnlyDTO, HttpStatus.OK);
     }
 
