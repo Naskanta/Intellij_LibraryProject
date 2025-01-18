@@ -15,6 +15,7 @@ import gr.aueb.cf.library.model.User;
 import gr.aueb.cf.library.repository.BookRepository;
 import gr.aueb.cf.library.repository.LoanRepository;
 import gr.aueb.cf.library.repository.UserRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -32,26 +33,26 @@ import java.util.List;
 public class LoanService {
 
     private final LoanMapper loanMapper;
-    @Autowired
+
     private final LoanRepository loanRepository;
-    @Autowired
+
     private final BookRepository bookRepository;
-    @Autowired
+
     private final UserRepository userRepository;
 
 
-
+    @Transactional
     public LoanReadOnlyDTO saveLoan(LoanInsertDTO loanInsertDTO)
             throws ObjectAlreadyExistsException, ObjectInvalidArgumentException, ObjectNotFoundException, IOException {
 
-        Book book = bookRepository.findById(loanInsertDTO.getBook().getBookId())
-                .orElseThrow(() -> new ObjectNotFoundException("Book", "Book with ID: " + loanInsertDTO.getBook().getBookId() + " not found"));
+        Book book = bookRepository.findByTitle(loanInsertDTO.getBook().getTitle())
+                .orElseThrow(() -> new ObjectNotFoundException("Book", "Book with ID: " + loanInsertDTO.getBook().getTitle() + " not found"));
 
         User user = userRepository.findByUsername(loanInsertDTO.getUser().getEmail())
                 .orElseThrow(() -> new ObjectNotFoundException("User", "User with Email: " + loanInsertDTO.getUser().getEmail() + " not found"));
 
-        if(loanRepository.findByUserIdAndBookId(book.getId(), user.getId()).isPresent()) {
-            throw new ObjectAlreadyExistsException("Loan", "Book with" + book.getId() + " already loaned to user" + user.getId());
+        if(loanRepository.findByUserUsernameAndBookTitle(user.getUsername(), book.getTitle()).isPresent()) {
+            throw new ObjectAlreadyExistsException("Loan", "Book with title " + book.getTitle() + " already loaned to user " + user.getUsername());
         }
 
 
@@ -59,12 +60,13 @@ public class LoanService {
         Loan loan = loanMapper.mapToLoanEntity(loanInsertDTO);
         loan.setBook(book);
         loan.setUser(user);
-        loanRepository.save(loan);
+        Loan savedLoan = loanRepository.save(loan);
 
-        return loanMapper.mapToLoanReadOnlyDTO(loan);
+        return loanMapper.mapToLoanReadOnlyDTO(savedLoan);
 
     }
 
+    @Transactional
     public Page<LoanReadOnlyDTO> getPaginatedBorrowedBooks(int page, int size) {
         String defaultSort = "id";
         Pageable pageable = PageRequest.of(page, size, Sort.by(defaultSort).ascending());
@@ -72,23 +74,19 @@ public class LoanService {
     }
 
 
-    public Page<LoanReadOnlyDTO> getPaginatedSortedLoans(int page, int size, String sortBy, String sortDirection) {
-        Sort sort = Sort.by(Sort.Direction.fromString(sortDirection), sortBy);
-        Pageable pageable = PageRequest.of(page, size, sort);
-        return loanRepository.findAll(pageable).map(loanMapper::mapToLoanReadOnlyDTO);
-    }
-
+    @Transactional
     public Paginated<LoanReadOnlyDTO> getLoanPaginated(LoanFilters filters) {
         var filtered = loanRepository.findAll(getSpecsFromFilters(filters), filters.getPageable());
         return new Paginated<>(filtered.map(loanMapper::mapToLoanReadOnlyDTO));
     }
 
+    @Transactional
     public List<LoanReadOnlyDTO> getLoansFiltered(LoanFilters filters) {
         return loanRepository.findAll(getSpecsFromFilters(filters))
                 .stream().map(loanMapper::mapToLoanReadOnlyDTO).toList();
     }
 
-    public Specification<Loan> getSpecsFromFilters(LoanFilters filters) {
+    private Specification<Loan> getSpecsFromFilters(LoanFilters filters) {
         return Specification
                 .where(LoanSpecification.loanTitle(filters.getBookTitle()))
                 .and(LoanSpecification.loanDate(filters.getLoanDate()))

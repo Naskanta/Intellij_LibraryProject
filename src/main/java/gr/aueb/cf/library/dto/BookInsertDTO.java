@@ -12,13 +12,8 @@ import lombok.Setter;
 @Setter
 public class BookInsertDTO {
 
-//    @NotNull(message = "Title must not be empty")
-    private Long bookId;
 
-
-    private Long userId;
-
-    @NotNull(message = "Ttile must not be empty")
+    @NotNull(message = "Title must not be empty")
     private String title;
 
     @NotNull(message = "Author must not be empty")

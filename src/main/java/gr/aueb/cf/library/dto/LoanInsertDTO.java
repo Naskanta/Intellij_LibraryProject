@@ -15,15 +15,17 @@ import java.time.LocalDateTime;
 @Setter
 public class LoanInsertDTO {
 
-    @NotEmpty(message = "Book ID is mandatory")
-    private BookInsertDTO book;
-
-    @NotEmpty(message = "User ID is mandatory")
-    private UserInsertDTO user;
-
     @NotNull(message = "Loan date is mandatory")
     private LocalDateTime loanDate;
 
     @NotNull(message = "Return date is mandatory")
     private LocalDateTime returnDate;
+
+    @NotNull(message = "Book ID is mandatory")
+    private BookInsertDTO book;
+
+    @NotNull(message = "User ID is mandatory")
+    private UserInsertDTO user;
+
+
 }

@@ -19,30 +19,14 @@ import lombok.Setter;
 @Setter
 public class EmployeeInsertDTO {
 
-//    @NotNull(message = "Is Active must not be null")
-//    private Boolean isActive;
-
-    @NotNull(message = "Username details must not be null")
-    private String username;
-
-    @Pattern(regexp =  "^(?=.*?[a-z])(?=.*?[A-Z])(?=.*?[0-9])(?=.*?[@#$%!^&*]).{8,}$", message = "Invalid password")
-    private String password;
-
     @NotEmpty(message = "Firstname must not be empty")
     private String firstname;
-
-    @NotEmpty(message = "Email is mandatory")
-    @Email(message = "Email should be valid")
-    private String email;
 
     @NotEmpty(message = "Lastname must not be empty")
     private String lastname;
 
-
-    private String dateOfBirth;
-
-    @Enumerated(EnumType.STRING)
-    private Role role;
+    @NotNull(message = "isActive field is required")
+    private Boolean isActive;
 
     @NotNull
     private UserInsertDTO user;

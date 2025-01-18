@@ -39,24 +39,16 @@ public class EmployeeService {
     public EmployeeReadOnlyDTO saveEmployee(EmployeeInsertDTO employeeInsertDTO)
             throws ObjectAlreadyExistsException, ObjectInvalidArgumentException, IOException {
 
-        if (userRepository.findByEmail(employeeInsertDTO.getUser().getEmail()).isPresent()) {
-            throw new ObjectAlreadyExistsException("User", "User with email: " + employeeInsertDTO.getUser().getEmail() + " already exists");
-        }
-
-        if (employeeRepository.findByUsername(employeeInsertDTO.getUsername()).isPresent()) {
-            throw new ObjectAlreadyExistsException("User", "User with username: " + employeeInsertDTO.getUsername() + " already exists");
-        }
 
         if (employeeRepository.findByLastname(employeeInsertDTO.getLastname()).isPresent()) {
             throw new ObjectAlreadyExistsException("User", "User with lastname: " + employeeInsertDTO.getLastname() + " already exists");
         }
 
         if (userRepository.findByUsername(employeeInsertDTO.getUser().getUsername()).isPresent()) {
-            throw new ObjectAlreadyExistsException("User", "User with username: " + employeeInsertDTO.getUsername() + " already exists");
+            throw new ObjectAlreadyExistsException("User", "User with username: " + employeeInsertDTO.getUser().getUsername() + " already exists");
         }
 
         Employee employee = employeeMapper.mapToEmployeeEntity(employeeInsertDTO);
-
         Employee savedEmployee = employeeRepository.save(employee);
         return employeeMapper.mapToEmployeeReadOnlyDTO(savedEmployee);
 
@@ -71,18 +63,11 @@ public class EmployeeService {
     }
 
     @Transactional
-    public Page<EmployeeReadOnlyDTO> getPaginatedSortedEmployees(int page, int size, String sortBy, String sortDirection) {
-        Sort sort = Sort.by(Sort.Direction.fromString(sortDirection), sortBy);
-        Pageable pageable = PageRequest.of(page, size, sort);
-        return employeeRepository.findAll(pageable).map(employeeMapper::mapToEmployeeReadOnlyDTO);
-    }
-
-
     public Paginated<EmployeeReadOnlyDTO> getEmployeesFilteredPaginated(EmployeeFilters filters) {
         var filtered = employeeRepository.findAll(getSpecsFromFilters(filters), filters.getPageable());
         return new Paginated<>(filtered.map(employeeMapper::mapToEmployeeReadOnlyDTO));
     }
-
+    @Transactional
     public List<EmployeeReadOnlyDTO> getEmployeesFiltered(EmployeeFilters filters) {
         return employeeRepository.findAll(getSpecsFromFilters(filters))
                 .stream().map(employeeMapper::mapToEmployeeReadOnlyDTO).toList();

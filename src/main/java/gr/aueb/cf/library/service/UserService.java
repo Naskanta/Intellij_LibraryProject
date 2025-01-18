@@ -16,6 +16,7 @@ import gr.aueb.cf.library.model.Employee;
 import gr.aueb.cf.library.model.User;
 import gr.aueb.cf.library.repository.EmployeeRepository;
 import gr.aueb.cf.library.repository.UserRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -33,52 +34,45 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UserService {
 
+
     private  final  EmployeeRepository employeeRepository;
     private final UserRepository userRepository;
     private final UserMapper userMapper;
 //    private final PasswordEncoder passwordEncoder;
 
+    @Transactional
     public UserReadOnlyDTO saveUser(UserInsertDTO userInsertDTO)
             throws ObjectAlreadyExistsException, ObjectInvalidArgumentException, IOException {
 
-        if (userRepository.findByEmail(userInsertDTO.getEmail()).isPresent()) {
-            throw new ObjectAlreadyExistsException("User", "User with email: " + userInsertDTO.getEmail() + " already exists");
-        }
 
         if (userRepository.findByUsername(userInsertDTO.getUsername()).isPresent()) {
             throw new ObjectAlreadyExistsException("User", "User with username: " + userInsertDTO.getUsername() + " already exists");
         }
 
         User user = userMapper.mapToUserEntity(userInsertDTO);
-
-
-        return userMapper.mapToUserReadOnlyDTO(userRepository.save(user));
+        User savedUser = userRepository.save(user);
+        return userMapper.mapToUserReadOnlyDTO(savedUser);
     }
 
-
+    @Transactional
     public Page<UserReadOnlyDTO> getPaginatedUsers(int page, int size) {
         String defaultSort = "id";
         Pageable pageable = PageRequest.of(page, size, Sort.by(defaultSort).ascending());
         return userRepository.findAll(pageable).map(userMapper::mapToUserReadOnlyDTO);
     }
 
-
-    public Page<UserReadOnlyDTO> getPaginatedSortedUsers(int page, int size, String sortBy, String sortDirection) {
-        Sort sort = Sort.by(Sort.Direction.fromString(sortDirection), sortBy);
-        Pageable pageable = PageRequest.of(page, size, sort);
-        return userRepository.findAll(pageable).map(userMapper::mapToUserReadOnlyDTO);
-    }
-
-
+    @Transactional
     public Paginated<UserReadOnlyDTO> getUsersFilteredPaginated(UserFilters filters) {
         var filtered = userRepository.findAll(getSpecsFromFilters(filters), filters.getPageable());
         return new Paginated<>(filtered.map(userMapper::mapToUserReadOnlyDTO));
     }
 
+    @Transactional
     public List<UserReadOnlyDTO> getUsersFiltered(UserFilters filters) {
         return userRepository.findAll(getSpecsFromFilters(filters))
                 .stream().map(userMapper::mapToUserReadOnlyDTO).toList();
     }
+
 
     private Specification<User> getSpecsFromFilters(UserFilters filters) {
         return Specification

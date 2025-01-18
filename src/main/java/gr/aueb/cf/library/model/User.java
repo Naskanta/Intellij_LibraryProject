@@ -30,6 +30,12 @@ public class User extends AbstractEntity implements UserDetails{
     @Column(unique=true)
     private String uuid;
 
+    @NotNull
+    private String firstname;
+
+    @NotNull
+    private String lastname;
+
     @Column(unique=true)
     private String username;
 
@@ -38,13 +44,6 @@ public class User extends AbstractEntity implements UserDetails{
     @NotNull
     @Email
     private String email;
-
-    @Column(nullable = false)
-    private String firstname;
-
-    @Column(nullable = false)
-    private String lastname;
-
 
     private LocalDate dateOfBirth;
 

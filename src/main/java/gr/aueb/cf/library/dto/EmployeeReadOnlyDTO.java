@@ -17,19 +17,7 @@ public class EmployeeReadOnlyDTO {
 
     private String uuid;
 
-    private String firstname;
-
-    private String lastname;
-
-    private String username;
-
-//    private String email;
-
-//    private Role role;
-
     private Boolean isActive;
-
-    private Long userId;
 
     private UserReadOnlyDTO user;
 

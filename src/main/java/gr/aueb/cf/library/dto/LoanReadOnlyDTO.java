@@ -15,13 +15,11 @@ public class LoanReadOnlyDTO {
 
     private String id;
 
-    private String bookId;
-
-    private Long userId;
-
     private LocalDateTime loanDate;
 
     private LocalDateTime returnDate;
 
+    private BookReadOnlyDTO book;
 
+    private UserReadOnlyDTO user;
 }

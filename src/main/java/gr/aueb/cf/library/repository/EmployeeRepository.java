@@ -9,6 +9,5 @@ import java.util.Optional;
 
 
 public interface EmployeeRepository extends JpaRepository<Employee, Long>, JpaSpecificationExecutor<Employee> {
-    Optional<Employee> findByUsername(String username);
     Optional<Employee> findByLastname(String lastname);
 }

@@ -20,11 +20,10 @@ public class UserInsertDTO {
 //    @NotNull(message = "Is Active must not be null")
 //    private Boolean isActive;
 
-
-    @NotEmpty(message = "Firstname must not be empty")
+    @NotNull(message = "Firstname must not be null")
     private String firstname;
 
-    @NotEmpty(message = "Lastname must not be empty")
+    @NotNull(message = "Lastname must not be null")
     private String lastname;
 
     @NotEmpty(message = "Invalid username")
@@ -36,7 +35,6 @@ public class UserInsertDTO {
     @NotEmpty(message = "Email is mandatory")
     @Email(message = "Email should be valid")
     private String email;
-
 
     private LocalDate dateOfBirth;
 

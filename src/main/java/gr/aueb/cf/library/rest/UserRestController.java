@@ -61,8 +61,7 @@ public class UserRestController {
     }
 
     @PostMapping("/users/all")
-    public ResponseEntity<List<UserReadOnlyDTO>> getUsers(@Nullable @RequestBody UserFilters filters,
-                                                                  Principal principal)
+    public ResponseEntity<List<UserReadOnlyDTO>> getUsers(@Nullable @RequestBody UserFilters filters )
             throws ObjectNotFoundException, ObjectNotAuthorizedException {
         try {
             if (filters == null) filters = UserFilters.builder().build();
@@ -74,8 +73,7 @@ public class UserRestController {
     }
 
     @PostMapping("/users/all/paginated")
-    public ResponseEntity<Paginated<UserReadOnlyDTO>> getUsersFilteredPaginated(@Nullable @RequestBody UserFilters filters,
-                                                                                        Principal principal)
+    public ResponseEntity<Paginated<UserReadOnlyDTO>> getUsersFilteredPaginated(@Nullable @RequestBody UserFilters filters)
             throws ObjectNotFoundException, ObjectNotAuthorizedException {
         try {
             if (filters == null) filters = UserFilters.builder().build();

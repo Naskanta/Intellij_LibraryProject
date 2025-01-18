@@ -13,8 +13,6 @@ import java.time.LocalDateTime;
 @Builder
 public class LoanFilters extends GenericFilters {
 
-    @Nullable
-    private String uuid;
 
     @Nullable
     private String bookTitle;

@@ -21,8 +21,8 @@ public class BookMapper {
 
     public BookReadOnlyDTO mapToBookReadOnlyDTO(Book book) {
         BookReadOnlyDTO bookReadOnlyDTO = new BookReadOnlyDTO();
-        bookReadOnlyDTO.setAuthor(book.getAuthor());
         bookReadOnlyDTO.setTitle(book.getTitle());
+        bookReadOnlyDTO.setAuthor(book.getAuthor());
         bookReadOnlyDTO.setPublisher(book.getPublisher());
         bookReadOnlyDTO.setIsbn(book.getIsbn());
         return bookReadOnlyDTO;

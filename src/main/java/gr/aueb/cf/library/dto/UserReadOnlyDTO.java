@@ -12,11 +12,8 @@ import lombok.Setter;
 @Setter
 public class UserReadOnlyDTO {
 
-    private String firstname;
-    private String lastname;
-    private String email;
     private String uuid;
     private String username;
+    private String email;
     private Boolean isActive;
-    private Role role;
 }

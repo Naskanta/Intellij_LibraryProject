@@ -57,9 +57,7 @@ public class BookRestController {
     }
 
     @PostMapping("/books/all")
-    public ResponseEntity<List<BookReadOnlyDTO>> getBooks(@Nullable @RequestBody BookFilters filters,
-                                                          Principal principal)
-            throws ObjectNotFoundException, ObjectNotAuthorizedException {
+    public ResponseEntity<List<BookReadOnlyDTO>> getBooks(@Nullable @RequestBody BookFilters filters) {
         try {
             if (filters == null) filters = BookFilters.builder().build();
             return ResponseEntity.ok(bookService.getBooksFiltered(filters));
@@ -70,9 +68,7 @@ public class BookRestController {
     }
 
     @PostMapping("/books/all/paginated")
-    public ResponseEntity<Paginated<BookReadOnlyDTO>> getBooksFilteredPaginated(@Nullable @RequestBody BookFilters filters,
-                                                                                Principal principal)
-            throws ObjectNotFoundException, ObjectNotAuthorizedException {
+    public ResponseEntity<Paginated<BookReadOnlyDTO>> getBooksFilteredPaginated(@Nullable @RequestBody BookFilters filters) {
         try {
             if (filters == null) filters = BookFilters.builder().build();
             return ResponseEntity.ok(bookService.getBooksFilteredPaginated(filters));

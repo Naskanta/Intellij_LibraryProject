@@ -25,24 +25,18 @@ public class Employee extends AbstractEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-
     @Column(unique=true)
     private String uuid;
-
-    @ColumnDefault("true")
-    @Column(name = "is_active")
-    private Boolean isActive;
-
-    @Column(unique=true)
-    private String username;
-
-    private String password;
 
     @NotNull
     private String firstname;
 
     @NotNull
     private String lastname;
+
+    @ColumnDefault("true")
+    @Column(name = "is_active")
+    private Boolean isActive;
 
     @NotNull
     @Email

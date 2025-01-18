@@ -10,8 +10,6 @@ import java.util.Optional;
 
 public interface LoanRepository extends JpaRepository<Loan, Long>, JpaSpecificationExecutor<Loan> {
 
-    Optional<Loan> findByUserId(Long userId);
-    Optional<Loan> findByBookId(Long bookId);
-    Optional<Loan> findByUserIdAndBookId(Long userId, Long bookId);
+    Optional<Loan> findByUserUsernameAndBookTitle(String username, String title);
 
 }

@@ -1,7 +1,9 @@
 package gr.aueb.cf.library.mapper;
 
+import gr.aueb.cf.library.dto.EmployeeInsertDTO;
 import gr.aueb.cf.library.dto.UserInsertDTO;
 import gr.aueb.cf.library.dto.UserReadOnlyDTO;
+import gr.aueb.cf.library.model.Employee;
 import gr.aueb.cf.library.model.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -15,14 +17,14 @@ public class UserMapper {
 
     public User mapToUserEntity(UserInsertDTO userInsertDTO) {
         User user = new User();
+        user.setFirstname(userInsertDTO.getFirstname());
+        user.setLastname(userInsertDTO.getLastname());
         user.setUsername(userInsertDTO.getUsername());
         user.setPassword(userInsertDTO.getPassword());
         user.setEmail(userInsertDTO.getEmail());
-        user.setFirstname(userInsertDTO.getFirstname());
-        user.setLastname(userInsertDTO.getLastname());
         user.setDateOfBirth(userInsertDTO.getDateOfBirth());
         user.setRole(userInsertDTO.getRole());
-//
+
 //        String encodedPassword = passwordEncoder.encode(userInsertDTO.getPassword());
 //        user.setPassword(encodedPassword);
         return user;
@@ -33,9 +35,6 @@ public class UserMapper {
         userReadOnlyDTO.setUuid(user.getUuid());
         userReadOnlyDTO.setUsername(user.getUsername());
         userReadOnlyDTO.setEmail(user.getEmail());
-        userReadOnlyDTO.setFirstname(user.getFirstname());
-        userReadOnlyDTO.setLastname(user.getLastname());
-        userReadOnlyDTO.setRole(user.getRole());
         userReadOnlyDTO.setIsActive(user.getIsActive());
 
 

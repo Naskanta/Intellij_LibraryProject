@@ -15,6 +15,7 @@ import gr.aueb.cf.library.mapper.BookMapper;
 import gr.aueb.cf.library.model.Book;
 import gr.aueb.cf.library.model.Employee;
 import gr.aueb.cf.library.repository.BookRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -31,50 +32,45 @@ import java.util.List;
 @RequiredArgsConstructor
 public class BookService {
 
-    @Autowired
-    private BookRepository bookRepository;
+
+    private final BookRepository bookRepository;
     private final BookMapper bookMapper;
 
 
+    @Transactional
     public BookReadOnlyDTO saveBook(BookInsertDTO bookInsertDTO)
             throws ObjectAlreadyExistsException, ObjectInvalidArgumentException, IOException {
 
+        //Check if the Title is already exists in the system
         if (bookRepository.findByTitle(bookInsertDTO.getTitle()).isPresent()) {
             throw new ObjectAlreadyExistsException("Book", "Book with title: " + bookInsertDTO.getTitle() + " already exists");
         }
 
-        if (bookRepository.findByIsbn(bookInsertDTO.getIsbn()).isPresent()) {
-            throw new ObjectAlreadyExistsException("Book", "Book with Isbn: " + bookInsertDTO.getIsbn() + " already exists");
-        }
-
         Book book = bookMapper.mapToBookEntity(bookInsertDTO);
-        return bookMapper.mapToBookReadOnlyDTO(bookRepository.save(book));
 
-
+        Book savedBook = bookRepository.save(book);
+        return bookMapper.mapToBookReadOnlyDTO(savedBook);
     }
 
-
+    @Transactional
     public Page<BookReadOnlyDTO> getPaginatedBooks(int page, int size) {
         String defaultSort = "id";
         Pageable pageable = PageRequest.of(page, size, Sort.by(defaultSort).ascending());
         return bookRepository.findAll(pageable).map(bookMapper::mapToBookReadOnlyDTO);
     }
 
-    public Page<BookReadOnlyDTO> getPaginatedSortedBooks(int page, int size, String sortBy, String sortDirection) {
-        Sort sort = Sort.by(Sort.Direction.fromString(sortDirection), sortBy);
-        Pageable pageable = PageRequest.of(page, size, sort);
-        return bookRepository.findAll(pageable).map(bookMapper::mapToBookReadOnlyDTO);
-    }
-
+    @Transactional
     public Paginated<BookReadOnlyDTO> getBooksFilteredPaginated(BookFilters filters) {
         var filtered = bookRepository.findAll(getSpecsFromFilters(filters), filters.getPageable());
         return new Paginated<>(filtered.map(bookMapper::mapToBookReadOnlyDTO));
     }
 
+    @Transactional
     public List<BookReadOnlyDTO> getBooksFiltered(BookFilters filters) {
         return bookRepository.findAll(getSpecsFromFilters(filters))
                 .stream().map(bookMapper::mapToBookReadOnlyDTO).toList();
     }
+
 
     private Specification<Book> getSpecsFromFilters(BookFilters filters) {
         return Specification
