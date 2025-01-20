@@ -33,7 +33,7 @@ public class UserRestController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(UserRestController.class);
     private final UserService userService;
-//    private BCryptPasswordEncoder bCryptPasswordEncoder;
+
 
     @GetMapping("/users")
     public ResponseEntity<Page<UserReadOnlyDTO>> getPaginatedUsers(

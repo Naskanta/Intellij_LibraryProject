@@ -78,6 +78,7 @@ public class User extends AbstractEntity implements UserDetails{
 
     @Override
     public String getPassword() {
+
         return password;
     }
 

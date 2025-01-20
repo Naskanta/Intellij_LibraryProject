@@ -36,6 +36,7 @@ public class UserService {
 
 
     private final UserRepository userRepository;
+    private final EmployeeRepository employeeRepository;
     private final UserMapper userMapper;
 //    private final PasswordEncoder passwordEncoder;
 
@@ -47,6 +48,7 @@ public class UserService {
         if (userRepository.findByUsername(userInsertDTO.getUsername()).isPresent()) {
             throw new ObjectAlreadyExistsException("User", "User with username: " + userInsertDTO.getUsername() + " already exists");
         }
+
 
         User user = userMapper.mapToUserEntity(userInsertDTO);
         User savedUser = userRepository.save(user);

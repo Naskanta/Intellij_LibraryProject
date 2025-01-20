@@ -13,25 +13,25 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class UserMapper {
 
-//    private final PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
 
     public User mapToUserEntity(UserInsertDTO userInsertDTO) {
         User user = new User();
         user.setFirstname(userInsertDTO.getFirstname());
         user.setLastname(userInsertDTO.getLastname());
         user.setUsername(userInsertDTO.getUsername());
-        user.setPassword(userInsertDTO.getPassword());
+        user.setPassword(passwordEncoder.encode(userInsertDTO.getPassword()));
         user.setEmail(userInsertDTO.getEmail());
         user.setDateOfBirth(userInsertDTO.getDateOfBirth());
         user.setRole(userInsertDTO.getRole());
 
-//        String encodedPassword = passwordEncoder.encode(userInsertDTO.getPassword());
-//        user.setPassword(encodedPassword);
+
         return user;
     }
 
     public UserReadOnlyDTO mapToUserReadOnlyDTO(User user) {
         UserReadOnlyDTO userReadOnlyDTO = new UserReadOnlyDTO();
+        userReadOnlyDTO.setId(user.getId());
         userReadOnlyDTO.setUuid(user.getUuid());
         userReadOnlyDTO.setUsername(user.getUsername());
         userReadOnlyDTO.setEmail(user.getEmail());

@@ -16,7 +16,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class EmployeeMapper {
 
-//    private final PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
 
 
     public Employee mapToEmployeeEntity(EmployeeInsertDTO employeeInsertDTO) {
@@ -32,11 +32,12 @@ public class EmployeeMapper {
         User user = new User();
 
         user.setUsername(userInsertDTO.getUsername());
-        user.setPassword(userInsertDTO.getPassword());
+        user.setPassword(passwordEncoder.encode(userInsertDTO.getPassword()));
         user.setEmail(userInsertDTO.getEmail());
         user.setDateOfBirth(userInsertDTO.getDateOfBirth());
         user.setRole(userInsertDTO.getRole());
         employee.setUser(user);
+
 
         return employee;
     }
