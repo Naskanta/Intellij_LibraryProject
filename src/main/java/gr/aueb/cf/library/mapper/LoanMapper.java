@@ -17,17 +17,13 @@ public class LoanMapper {
         loan.setLoanDate(loanInsertDTO.getLoanDate());
         loan.setReturnDate(loanInsertDTO.getReturnDate());
 
-
-        BookInsertDTO bookInsertDTO = new BookInsertDTO();
+        // Ανάθεση των Book και User από το LoanInsertDTO
         Book book = new Book();
-
-        book.setIsbn(bookInsertDTO.getIsbn());
+        book.setTitle(loanInsertDTO.getBook().getTitle());  // Χρησιμοποιούμε το BookInsertDTO από το LoanInsertDTO
         loan.setBook(book);
 
-        UserInsertDTO userInsertDTO = new UserInsertDTO();
         User user = new User();
-
-        user.setUsername(userInsertDTO.getUsername());
+        user.setUsername(loanInsertDTO.getUser().getUsername());  // Χρησιμοποιούμε το UserInsertDTO από το LoanInsertDTO
         loan.setUser(user);
 
         return loan;

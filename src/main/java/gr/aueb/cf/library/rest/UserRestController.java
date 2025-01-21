@@ -2,11 +2,10 @@ package gr.aueb.cf.library.rest;
 
 
 import gr.aueb.cf.library.core.exceptions.*;
-import gr.aueb.cf.library.core.filters.EmployeeFilters;
+
 import gr.aueb.cf.library.core.filters.Paginated;
 import gr.aueb.cf.library.core.filters.UserFilters;
-import gr.aueb.cf.library.dto.EmployeeInsertDTO;
-import gr.aueb.cf.library.dto.EmployeeReadOnlyDTO;
+
 import gr.aueb.cf.library.dto.UserInsertDTO;
 import gr.aueb.cf.library.dto.UserReadOnlyDTO;
 import gr.aueb.cf.library.service.UserService;

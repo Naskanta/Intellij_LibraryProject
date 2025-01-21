@@ -41,4 +41,6 @@ public class UserInsertDTO {
     @Enumerated(EnumType.STRING)
     @NotNull(message = "Role must not be null")
     private Role role;
+
+
 }

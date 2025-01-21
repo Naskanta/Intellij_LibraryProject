@@ -24,4 +24,6 @@ public class BookInsertDTO {
 
     @NotNull(message = "Isbn cannot be empty")
     private String isbn;
+
+
 }

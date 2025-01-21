@@ -3,18 +3,18 @@ package gr.aueb.cf.library.service;
 import gr.aueb.cf.library.core.enums.Role;
 import gr.aueb.cf.library.core.exceptions.ObjectAlreadyExistsException;
 import gr.aueb.cf.library.core.exceptions.ObjectInvalidArgumentException;
-import gr.aueb.cf.library.core.filters.EmployeeFilters;
+
 import gr.aueb.cf.library.core.filters.Paginated;
 import gr.aueb.cf.library.core.filters.UserFilters;
-import gr.aueb.cf.library.core.specifications.EmployeeSpecification;
+
 import gr.aueb.cf.library.core.specifications.UserSpecification;
-import gr.aueb.cf.library.dto.EmployeeReadOnlyDTO;
+
 import gr.aueb.cf.library.dto.UserInsertDTO;
 import gr.aueb.cf.library.dto.UserReadOnlyDTO;
 import gr.aueb.cf.library.mapper.UserMapper;
-import gr.aueb.cf.library.model.Employee;
+
 import gr.aueb.cf.library.model.User;
-import gr.aueb.cf.library.repository.EmployeeRepository;
+
 import gr.aueb.cf.library.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -36,7 +36,7 @@ public class UserService {
 
 
     private final UserRepository userRepository;
-    private final EmployeeRepository employeeRepository;
+
     private final UserMapper userMapper;
 //    private final PasswordEncoder passwordEncoder;
 

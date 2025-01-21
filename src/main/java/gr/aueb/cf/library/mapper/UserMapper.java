@@ -1,9 +1,9 @@
 package gr.aueb.cf.library.mapper;
 
-import gr.aueb.cf.library.dto.EmployeeInsertDTO;
+
 import gr.aueb.cf.library.dto.UserInsertDTO;
 import gr.aueb.cf.library.dto.UserReadOnlyDTO;
-import gr.aueb.cf.library.model.Employee;
+
 import gr.aueb.cf.library.model.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -24,6 +24,7 @@ public class UserMapper {
         user.setEmail(userInsertDTO.getEmail());
         user.setDateOfBirth(userInsertDTO.getDateOfBirth());
         user.setRole(userInsertDTO.getRole());
+
 
 
         return user;
