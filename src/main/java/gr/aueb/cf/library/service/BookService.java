@@ -3,17 +3,17 @@ package gr.aueb.cf.library.service;
 import gr.aueb.cf.library.core.exceptions.ObjectAlreadyExistsException;
 import gr.aueb.cf.library.core.exceptions.ObjectInvalidArgumentException;
 import gr.aueb.cf.library.core.filters.BookFilters;
-import gr.aueb.cf.library.core.filters.EmployeeFilters;
+
 import gr.aueb.cf.library.core.filters.Paginated;
 import gr.aueb.cf.library.core.specifications.BookSpecification;
-import gr.aueb.cf.library.core.specifications.EmployeeSpecification;
+
 import gr.aueb.cf.library.dto.BookInsertDTO;
 import gr.aueb.cf.library.dto.BookReadOnlyDTO;
-import gr.aueb.cf.library.dto.EmployeeReadOnlyDTO;
+
 import gr.aueb.cf.library.dto.UserReadOnlyDTO;
 import gr.aueb.cf.library.mapper.BookMapper;
 import gr.aueb.cf.library.model.Book;
-import gr.aueb.cf.library.model.Employee;
+
 import gr.aueb.cf.library.repository.BookRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;

@@ -21,11 +21,11 @@ public class Loan extends AbstractEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name="book_id", referencedColumnName = "id")
     private Book book;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name="user_id", referencedColumnName = "id")
     private User user;
 

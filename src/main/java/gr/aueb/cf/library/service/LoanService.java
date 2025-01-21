@@ -48,8 +48,8 @@ public class LoanService {
         Book book = bookRepository.findByTitle(loanInsertDTO.getBook().getTitle())
                 .orElseThrow(() -> new ObjectNotFoundException("Book", "Book with ID: " + loanInsertDTO.getBook().getTitle() + " not found"));
 
-        User user = userRepository.findByUsername(loanInsertDTO.getUser().getEmail())
-                .orElseThrow(() -> new ObjectNotFoundException("User", "User with Email: " + loanInsertDTO.getUser().getEmail() + " not found"));
+        User user = userRepository.findByUsername(loanInsertDTO.getUser().getUsername())
+                .orElseThrow(() -> new ObjectNotFoundException("User", "User with Email: " + loanInsertDTO.getUser().getUsername() + " not found"));
 
         if(loanRepository.findByUserUsernameAndBookTitle(user.getUsername(), book.getTitle()).isPresent()) {
             throw new ObjectAlreadyExistsException("Loan", "Book with title " + book.getTitle() + " already loaned to user " + user.getUsername());

@@ -54,17 +54,17 @@ public class User extends AbstractEntity implements UserDetails{
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    @OneToOne(mappedBy = "user")
-    private Employee employee;
+//    @OneToOne(mappedBy = "user")
+//    private Employee employee;
 
-    @OneToOne(mappedBy = "user")
-    private Loan loan;
+    @OneToMany(mappedBy = "user")
+    private List<Loan> loan;
 
 
-    public boolean isEmployee() {
-
-        return getEmployee() != null;
-    }
+//    public boolean isEmployee() {
+//
+//        return getEmployee() != null;
+//    }
 
     @PrePersist
     public void initializeUUID() {

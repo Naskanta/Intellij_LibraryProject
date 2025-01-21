@@ -32,7 +32,7 @@ public class Book extends AbstractEntity {
     @NotNull(message = "Isbn cannot be null")
     private String isbn;
 
-    @OneToOne(mappedBy = "book")
-    private Loan loan;
+    @OneToMany(mappedBy = "book")
+    private List<Loan> loans;
 
 }

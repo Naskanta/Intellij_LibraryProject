@@ -49,10 +49,11 @@ public class SecurityConfiguration {
                 .exceptionHandling((exceptions) -> exceptions.authenticationEntryPoint(myCustomAuthenticationEntryPoint()))
                 .exceptionHandling((exceptions) -> exceptions.accessDeniedHandler(myCustomAccessDeniedHandler()))
                 .authorizeHttpRequests(req -> req
-                        .requestMatchers("api/employees/save").permitAll()
-                        .requestMatchers("api/users/save").permitAll()
-                        .requestMatchers("api/auth/authenticate").permitAll()
-                                .requestMatchers("/**").authenticated()
+                        .requestMatchers("/api/users/save").permitAll()
+                        .requestMatchers("/api/auth/authenticate").permitAll()
+                        .requestMatchers("/api/users/**").hasAnyAuthority(Role.EMPLOYEE.name())
+                        .requestMatchers("/api/loans/save").hasAnyAuthority(Role.EMPLOYEE.name())
+                        .requestMatchers("/**").authenticated()
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(STATELESS))
                 .authenticationProvider(authenticationProvider())
@@ -61,7 +62,7 @@ public class SecurityConfiguration {
         return http.build();
     }
 
-    // todo
+
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
@@ -84,7 +85,7 @@ public class SecurityConfiguration {
         return config.getAuthenticationManager();
     }
 
-    @Bean
+
     public AuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
         authProvider.setUserDetailsService(userDetailsService);
