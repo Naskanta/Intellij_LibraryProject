@@ -22,7 +22,6 @@ public class UserMapper {
         user.setUsername(userInsertDTO.getUsername());
         user.setPassword(passwordEncoder.encode(userInsertDTO.getPassword()));
         user.setEmail(userInsertDTO.getEmail());
-        user.setDateOfBirth(userInsertDTO.getDateOfBirth());
         user.setRole(userInsertDTO.getRole());
 
 

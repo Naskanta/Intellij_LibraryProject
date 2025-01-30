@@ -50,7 +50,7 @@ public class SecurityConfiguration {
                 .exceptionHandling((exceptions) -> exceptions.accessDeniedHandler(myCustomAccessDeniedHandler()))
                 .authorizeHttpRequests(req -> req
                         .requestMatchers("/api/users/save").permitAll()
-                        .requestMatchers("/api/auth/authenticate").permitAll()
+                        .requestMatchers("/api/auth/login").permitAll()
                         .requestMatchers("/api/users/**").hasAnyAuthority(Role.EMPLOYEE.name())
                         .requestMatchers("/api/loans/save").hasAnyAuthority(Role.EMPLOYEE.name())
                         .requestMatchers("/**").authenticated()
@@ -66,7 +66,7 @@ public class SecurityConfiguration {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(List.of( "http://localhost:8080"));
+        configuration.setAllowedOrigins(List.of( "http://localhost:8080", "http://localhost:4200"));
         configuration.setAllowedMethods(List.of("*"));
         configuration.setAllowedHeaders(List.of("*"));
         configuration.setAllowCredentials(true);

@@ -45,7 +45,6 @@ public class User extends AbstractEntity implements UserDetails{
     @Email
     private String email;
 
-    private LocalDate dateOfBirth;
 
     @ColumnDefault("true")
     @Column(name = "is_active")
