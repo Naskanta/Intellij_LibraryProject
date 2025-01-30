@@ -1,0 +1,54 @@
+<h4>Save Loan</h4>
+
+@if(saveStatus.message === "Not attempted yet") {
+  <div class="d-flex flex-column mt-2 w-50">
+    <form [formGroup]="form" class="d-flex flex-column">
+      
+     
+      <mat-form-field>
+        <mat-label>Loan Date:</mat-label>
+        <input matInput type="date" formControlName="loanDate">
+        <mat-error >Loan date is required</mat-error>
+      </mat-form-field>
+
+     
+      <mat-form-field>
+        <mat-label>Return Date:</mat-label>
+        <input matInput type="date" formControlName="returnDate">
+        <mat-error >Return date is required</mat-error>
+      </mat-form-field>
+
+     
+      <mat-form-field>
+        <mat-label>Book Title:</mat-label>
+        <input matInput type="text" formControlName="bookTitle">
+        <mat-error >Book is required</mat-error>
+      </mat-form-field>
+
+     
+      <mat-form-field>
+        <mat-label>User:</mat-label>
+        <input matInput type="text" formControlName="username">
+        <mat-error >User is required</mat-error>
+      </mat-form-field>
+
+      <button mat-flat-button (click)="onSubmit(form.value)" [disabled]="form.invalid">
+        Register Loan
+      </button>
+    </form>
+  </div>
+} @else {
+     @if (saveStatus.success) {
+        <div class="alert alert-success mt-2 w-50">
+            <strong>Success:</strong> {{saveStatus.message}}
+        </div>
+    } @else {
+        <div class="alert alert-danger mt-2 w-50">
+            <strong>ERROR</strong> {{saveStatus.message}}
+        </div>
+    }
+    <button mat-flat-button color="primary" class="mt-2" (click)="saveAnother()">
+        Register another user
+    </button>
+}
+<button routerLink="/forbidden" style="margin-top: 20px;" class="btn btn-secondary">Back</button>

@@ -1,0 +1,28 @@
+<h2>Book List</h2>
+
+<table class="table table-success table-striped">
+    <thead>
+        <tr>
+            <th>Titlte</th>
+            <th>Author</th>
+            <th>Publisher</th>
+            <th>Isbn</th>
+            
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let book of books">
+            <td>{{ book.title }}</td>
+            <td>{{ book.author }}</td>
+            <td>{{ book.publisher }}</td>
+            <td>{{ book.isbn }}</td>
+        </tr>
+    </tbody>
+  
+   
+        <span role="button" routerLink="/forbidden"  class="me-3 d-flex gap-2 text-light align-items-center">Back</span>
+    
+</table>
+
+<button routerLink="/forbidden" class="btn btn-secondary">Back</button>
+

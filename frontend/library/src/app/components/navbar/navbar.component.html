@@ -1,0 +1,15 @@
+<nav class="navbar navbar-dar bg-primary justify-content-between">
+    <a class="navbar-brand ms-3 cursor-pointerr" role="button" routerLink=""> Library-Home</a>
+    @if(user()){
+        <span class="me-3 d-flex gap-2 text-light">
+            Welcome, {{user()?.lastname}}
+            <mat-icon role="button" (click)="logout()">logout</mat-icon>
+        </span>
+    } @else {
+    <span role="button" routerLink="/signup"  class="me-3 d-flex gap-2 text-light align-items-center">Sign up</span>
+    <span class="me-3 d-flex gap-2 text-light align-items-center">
+        Login
+        <mat-icon role="button" class="icon-link-hover" routerLink="/user-login">login</mat-icon>
+    </span>
+    }
+</nav>

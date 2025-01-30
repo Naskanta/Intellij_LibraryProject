@@ -1,0 +1,61 @@
+<h4>User Signup</h4>
+
+@if(registrationStatus.message === "Not attempted yet") {
+    <div class="d-flex flex-column mt-2 w-50">
+        <form [formGroup]="form" class="d-flex flex-column">
+            <mat-form-field>
+                <mat-label>Firstname:</mat-label>
+                <input matInput type="text" formControlName="firstname">
+                <mat-error>Firstname is required</mat-error>
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-label>Lastname:</mat-label>
+                <input matInput type="text" formControlName="lastname">
+                <mat-error>Lastname is required</mat-error>
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-label>Username:</mat-label>
+                <input matInput type="text" formControlName="username">
+                <mat-error>Username is required</mat-error>
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-label>Password:</mat-label>
+                <input matInput type="password" formControlName="password">
+                <mat-error>Password must have at least one Capital, one Number and one Symbol and be at least 8 digits</mat-error>
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-label>Email:</mat-label>
+                <input matInput type="text" formControlName="email">
+                <mat-error>Email is required</mat-error>
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-label>Role (EMPLOYEE, USER):</mat-label>
+                <input matInput type="text" formControlName="role">
+                <mat-error>Role is required</mat-error>
+            </mat-form-field>
+
+            <button mat-flat-button (click)="onSubmit(form.value)" [disabled]="form.invalid">
+                Register
+            </button>
+        </form>
+    </div>
+} @else {
+    @if (registrationStatus.success) {
+        <div class="alert alert-success mt-2 w-50">
+            <strong>Success:</strong> {{registrationStatus.message}}
+        </div>
+    } @else {
+        <div class="alert alert-danger mt-2 w-50">
+            <strong>ERROR</strong> {{registrationStatus.message}}
+        </div>
+    }
+    <button mat-flat-button color="primary" class="mt-2" (click)="registerAnother()">
+        Register another user
+    </button>
+}
+

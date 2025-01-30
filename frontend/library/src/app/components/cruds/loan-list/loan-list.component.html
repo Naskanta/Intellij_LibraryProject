@@ -1,0 +1,22 @@
+<h2>Loan List</h2>
+
+<table class="table table-success table-striped">
+  <thead>
+    <tr>
+      <th>Book Title</th>
+      <th>Username</th>
+      <th>Loan Date</th>
+      <th>Return Date</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let loan of loans">
+      <td>{{ loan.book.title }}</td>
+      <td>{{ loan.user.username }}</td>
+      <td>{{ loan.loanDate }}</td>
+      <td>{{ loan.returnDate }}</td>
+    </tr>
+  </tbody>
+</table>
+
+<button routerLink="/forbidden" class="btn btn-secondary mt-3">Back</button>
